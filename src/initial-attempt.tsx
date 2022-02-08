@@ -25,7 +25,7 @@ export interface InitialAttemptProps extends BlockAttributes {
 
 export const InitialAttempt = ({ enddate }: InitialAttemptProps): ReactElement => {
 
-  const [usersList, setUsers] = React.useState([]);
+  const [usersList, setUsers] = React.useState([{}]);
 
   const [user, setUser] = React.useState({});
   const [userHTML, setUH] = React.useState("");
@@ -57,13 +57,13 @@ const styles: { [key: string]: React.CSSProperties } = {
 
   React.useEffect(() => {
 
-    const getUsers = async (limit: number, offset:number, users) => {
+    const getUsers = async (limit: number, offset:number, users:Array<Object>) => {
       const loadedUsers  = await we.api.getUsers({'status': 'activated', 'limit': limit, 'offset': offset});
       users = users.concat(loadedUsers.data);
       if(loadedUsers.total < limit + offset){
         setUsers(users);
       } else {
-        setUsers(await getUsers(limit, limit+offset, users));
+        await getUsers(limit, limit+offset, users);
       }
     };
 
@@ -85,11 +85,16 @@ const styles: { [key: string]: React.CSSProperties } = {
 
   
 
-  return (
+  /* return (
     <div>
       <a href={we.authMgr.getBranchConfig().whitelabelConfig.frontendURL + "/profile/" + user.id} class="link-internal ally-focus-within" ><img data-type="thumb" data-size="35" aria-hidden="true" data-user-id={user.id} style={styles.container} src={avatarURL} alt="Olivia Mende"></img> {user.firstName} - {user.lastName} - {userDate}</a>
       <div>{userHTML}</div>
     </div>
-  )
+  ) */
+  return (<div>{
+    usersList.map(
+      theUser => <div>{theUser.id} - {theUser.firstName} - {theUser.lastName}</div>
+    )
+    }</div>);
+    
 };
-

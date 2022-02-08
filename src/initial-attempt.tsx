@@ -11,6 +11,7 @@
  * limitations under the License.
  */
 
+import { userInfo } from "os";
 import React, { ReactElement } from "react";
 import { BlockAttributes } from "widget-sdk";
 
@@ -21,49 +22,74 @@ export interface InitialAttemptProps extends BlockAttributes {
   enddate: number;
 }
 
-const calculatedifference = (startdate: number, enddate: number = Date.now()) => {
-  const second = 1000,
-    minute = second * 60,
-    hour = minute * 60,
-    day = hour * 24
-  const distance = enddate - startdate
-  const days = Math.floor(distance / day)
-  const hours = Math.floor((distance % day) / hour)
-  const minutes = Math.floor((distance % hour) / minute)
-  const seconds = Math.floor((distance % minute) / second)
-
-  return { days, hours, minutes, seconds }
-}
-
 
 export const InitialAttempt = ({ enddate }: InitialAttemptProps): ReactElement => {
-  const [actualdate, setactualdate] = React.useState(Date.now())
-  const { days, hours, minutes, seconds } = calculatedifference(actualdate, enddate)
+
+  const [usersList, setUsers] = React.useState([]);
+
+  const [user, setUser] = React.useState({});
+  const [userHTML, setUH] = React.useState("");
+  const [avatarURL, setAU] = React.useState("");
+  const [userDate, setUP] = React.useState([]);
+
+  /*React.useEffect(() => {
+    const getUsers = async (limit: number, offset:number, users) => {
+        const loadedUsers  = await we.api.getUsers({'status': 'activated', 'limit': limit, 'offset': offset});
+        users = users.concat(loadedUsers.data);
+        if(loadedUsers.total < limit + offset){
+          setUsers(users);
+        } else {
+          setUsers(await getUsers(limit, limit+offset, users));
+        }
+      };
+
+    getUsers(100,0,[]).catch(console.error);
+  }, []);
+*/
+
+const styles: { [key: string]: React.CSSProperties } = {
+  container: {
+    width: '35px',
+    height: '35px',
+    verticalAlign: 'middle'
+  },
+};
+
   React.useEffect(() => {
-    setInterval(() => {
-      setactualdate(Date.now())
-    }, 1000)
-  }, [])
+
+    const getUsers = async (limit: number, offset:number, users) => {
+      const loadedUsers  = await we.api.getUsers({'status': 'activated', 'limit': limit, 'offset': offset});
+      users = users.concat(loadedUsers.data);
+      if(loadedUsers.total < limit + offset){
+        setUsers(users);
+      } else {
+        setUsers(await getUsers(limit, limit+offset, users));
+      }
+    };
+
+    getUsers(100,0,[]).catch(console.error);
+
+    const fetchUser = async () => {
+      const user = await we.api.getUser("me");
+
+      const userDate = user.profile["anniversarydate"].substring(0,5);
+
+      setUser(user);
+      setAU(user.avatar.thumb.url);
+      setUP(userDate);
+
+    }
+
+    fetchUser().catch(console.error);
+  }, []);
+
+  
 
   return (
     <div>
-      <ul>
-        <li>
-          <span>{days}</span> Days
-        </li>
-        <li>
-          <span>{hours}</span> Hours
-        </li>
-        <li>
-          <span>{minutes}</span> Minutes
-        </li>
-        <li>
-          <span>{seconds}</span> Seconds
-        </li>
-      </ul>
+      <a href={we.authMgr.getBranchConfig().whitelabelConfig.frontendURL + "/profile/" + user.id} class="link-internal ally-focus-within" ><img data-type="thumb" data-size="35" aria-hidden="true" data-user-id={user.id} style={styles.container} src={avatarURL} alt="Olivia Mende"></img> {user.firstName} - {user.lastName} - {userDate}</a>
+      <div>{userHTML}</div>
     </div>
   )
-  
-  ;
 };
 

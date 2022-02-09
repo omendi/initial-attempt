@@ -135,7 +135,7 @@ export const InitialAttempt = ({ dateformat, anniversaryprofilefieldid, includep
       return <div key={theUser.id + 'div'}>
                 <p key={theUser.id + 'p'} id={theUser.id} className="cw-entries">
                   <a key={theUser.id + 'a'} href={userLink} className="link-internal ally-focus-within">
-                    {hasAvatar ? <img key={theUser.id + 'img'} data-type="thumb" data-size="35" aria-hidden="true" data-user-id={theUser.id} style={imgstyles.container} src={theUser.avatar?.thumb?.url} alt={theUser.firstName + " " + theUser.lastName}></img> :
+                    {hasAvatar ? <img key={theUser.id + 'img'} data-type="thumb" data-size="35" aria-hidden="true" data-user-id={theUser.id} style={imgstyles.container} src={theUser.avatar ? (theUser.avatar.thumb ? theUser.avatar.thumb.url : "") : ""} alt={theUser.firstName + " " + theUser.lastName}></img> :
                       <span key={theUser.id + 'span'} data-type="thumb" data-size="35" aria-hidden="true" data-user-id={theUser.id} style={spanstyles.container}>{theUser.firstName.substr(0,1) + theUser.lastName.substr(0,1)}</span>}
                     <p>{theUser.firstName} - {theUser.lastName}<br></br>- {theUser.profile ? theUser.profile[anniversaryprofilefieldid]?.substring(0,5) : ''}</p>
                     </a>

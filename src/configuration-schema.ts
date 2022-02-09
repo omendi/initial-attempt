@@ -20,20 +20,21 @@ import { JSONSchema7 } from "json-schema";
  */
 export const configurationSchema: JSONSchema7 = {
   properties: {
-    profilefieldID: {
+    anniversaryprofilefieldid: {
       type: "string",
-      title: "Profile Field ID",
+      title: "Profile Field ID"
     },
-    dateFormat: {
+    dateformat: {
       type: "string",
       enum: ["DD.MM", "MM.DD"],
-      title: "Date Format",
+      title: "Date Format"
     },
-    includePending: {
+    includepending: {
       type: "boolean",
       title: "Include Pending Users?",
+      default: false
     },
-    noInstancesMessage: {
+    noinstancesmessage: {
       type: "string",
       title: "Message when there are no applicable users",
     },
@@ -41,97 +42,104 @@ export const configurationSchema: JSONSchema7 = {
       type: "string",
       title: "Title",
     },
-    todayTitle: {
+    todaytitle: {
       type: "string",
       title: "Today's Title",
     },
-    yearWord: {
+    yearword: {
       type: "string",
       title: "Year Word",
     },
-    yearWordPlural: {
+    yearwordplural: {
       type: "string",
       title: "Year Word Plural",
     },
-    showDate: {
+    showdate: {
       type: "boolean",
       title: "Show Celebration Date?",
+      default: true
     },
-    showWholeMonth: {
+    showwholemonth: {
       type: "boolean",
       title: "Show Celebrations from the Whole Month?",
+      default: false
     },
-    showDaysBefore: {
+    showwholemonthforxdays: {
+      type: "number",
+      title: "Number of days to show Month of Celebrations",
+    },
+    showdaysbefore: {
       type: "number",
       title: "Number of Days Before",
     },
-    showDaysAfter: {
+    showdaysafter: {
       type: "number",
       title: "Number of Days After",
     },
-    splitByYear: {
+    splitbyyear: {
       type: "boolean",
       title: "Split User's by Year?",
+      default: false
     },
-    specialYears: {
+    specialyears: {
       type: "string",
       title: "Special Years",
     },
-    linkToChat: {
+    linktochat: {
       type: "boolean",
       title: "Link to Chat?",
+      default: false
     },
     limit: {
       type: "number",
       title: "Maximum Users to Show",
     },
-    headerColor: {
+    headercolor: {
       type: "string",
       title: "Header Color",
     },
-    additionalFieldsDisplayed: {
+    additionalfieldsdisplayed: {
       type: "string",
       title: "Additional Profile Fields to Display",
     },
-    optOutGroupID: {
+    optoutgroupid: {
       type: "string",
       title: "Opt Out GroupID",
     }
   },
-  required : ["profilefieldID", "dateFormat", "noInstancesMessage", "yearWord", "yearWordPlural"],
+  required : ["anniversaryprofilefieldid", "dateformat"],
   dependencies: {
-    includePending: {
+    includepending: {
       properties: {
-        networkPluginID: { 
+        networkpluginid: { 
           type: "string",
           title: "Network Plugin ID" 
         },
-      },
-      required: ["networkPluginID"]
+      }
     },
     limit: {
       properties: {
-        fullPageID: {
+        fullpageid: {
           type: "string",
           title: "Page ID",
         },
-        fullPageText: {
+        fullpagetext: {
           type: "string",
           title: "Message Link to Full page",
         }
       }
     },
-    showDaysBefore: {
+    showdaysbefore: {
       properties: {
-        daysBeforeTitle: {
+        daysbeforetitle: {
           type: "string",
           title: "Days Before Title",
         }
       }
     },
-    showDaysAfter: {
+    showdaysafter: {
       properties: {
-        daysBeforeAfter: {
+        daysaftertitle: {
           type: "string",
           title: "Days After Title",
         }
@@ -145,73 +153,76 @@ export const configurationSchema: JSONSchema7 = {
  * @see https://react-jsonschema-form.readthedocs.io/en/latest/api-reference/uiSchema/
  */
 export const uiSchema: UiSchema = {
-  profilefieldID: {
+  anniversaryprofilefieldid: {
     "ui:help": "Enter the profile field ID of the field that holds the date information",
   },
-  dateFormat: {
+  dateformat: {
     "ui:help": "Enter the date format that the date is entered in."
   },
-  includePending: {
+  includepending: {
     "ui:help": "Check to include pending users",
   },
-  noInstancesMessage: {
+  noinstancesmessage: {
     "ui:help": "Text that will be shown in the event that there are no applicable users",
   },
   title: {
     "ui:help": "The title of the widget",
   },
-  todayTitle: {
+  todaytitle: {
     "ui:help": "The wording that will be shown above the users whose celebration is today",
   },
-  yearWord: {
+  yearword: {
     "ui:help": "The word to use for a the instance (Anniversary, Birthday, Year, etc)",
   },
-  yearWordPlural: {
+  yearwordplural: {
     "ui:help": "The word to use for a the instance plural (Anniversaries, Birthdays, Years, etc)",
   },
-  showDate: {
+  showdate: {
     "ui:help": "Select to show the user's date next to the user's name",
   },
-  showWholeMonth: {
+  showwholemonth: {
     "ui:help": "Select to show all celebrations for the current month",
   },
-  showDaysBefore: {
+  showwholemonthforxdays: {
+    "ui:help": "Number of days that the month's worth of celebrations should be shown (starting at the beginning of the month)",
+  },
+  showdaysbefore: {
     "ui:help": "The number of previous days for which corresponding instances should be shown",
   },
-  daysBeforeTitle: {
+  daysbeforetitle: {
     "ui:help": "The message that appears at the top of previous celebrations section",
   },
-  showDaysAfter: {
+  showdaysafter: {
     "ui:help": "The number of upcoming days for which corresponding instances should be shown",
   },
-  daysBeforeAfter: {
+  daysaftertitle: {
     "ui:help": "The message that appears at the top of upcoming celebrations section",
   },
-  splitByYear: {
+  splitbyyear: {
     "ui:help": "Select if users should be split by year",
   },
-  specialYears: {
+  specialyears: {
     "ui:help": "If only certain years of celebrations should be shown, enter numbers separated by commas",
   },
-  linkToChat: {
+  linktochat: {
     "ui:help": "Select if the link to a chat message should be shown, default is a link to the user's profile",
   },
   limit: {
     "ui:help": "Maximum number of users to be shown",
   },
-  fullPageID: {
+  fullpageid: {
     "ui:help": "Page ID to the page with the full list of celebrations shown",
   },
-  fullPageText: {
+  fullpagetext: {
     "ui:help": "Link text to link to page with the full list of celebrations",
   },
-  headerColor: {
+  headercolor: {
     "ui:help": "Hexcode color of the Header",
   },
-  additionalFieldsDisplayed: {
+  additionalfieldsdisplayed: {
     "ui:help": "Profile Field IDs to show next to user's name separated by commas",
   },
-  optOutGroupID: {
+  optoutgroupid: {
     "ui:help": "Group ID of opt out group. Users in this group will not be shown in the widget",
   }
 };

@@ -23,7 +23,26 @@ import pkg from '../package.json'
  * Define wich attributes are handled by the widget. This should be also reflected in configuration schema
  */
 const widgetAttributes: string[] = [
-  'enddate',
+  'anniversaryprofilefieldid',
+  'dateformat',
+  'includepending',
+  'noinstancesmessage',
+  'title',
+  'todaytitle',
+  'yearword',
+  'yearwordplural',
+  'showdate',
+  'showwholemonth',
+  'showwholemonthforxdays',
+  'showdaysbefore',
+  'showdaysafter',
+  'splitbyyear',
+  'specialyears',
+  'linktochat',
+  'limit',
+  'headercolor',
+  'additionalfieldsdisplayed',
+  'optoutgroupid'
 ];
 
 /**

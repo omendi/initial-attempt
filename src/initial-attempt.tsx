@@ -129,6 +129,8 @@ export const InitialAttempt = ({ dateformat, anniversaryprofilefieldid, includep
     theUser => {
       var hasAvatar = typeof(theUser.avatar) !== 'undefined',
           userLink = we.authMgr.getBranchConfig().whitelabelConfig.frontendURL + "/profile/" + theUser.id;
+
+      console.log(hasAvatar)
       
       return <div key={theUser.id + 'div'}>
                 <p key={theUser.id + 'p'} id={theUser.id} className="cw-entries">

@@ -61,6 +61,7 @@ const styles: { [key: string]: React.CSSProperties } = {
       const loadedUsers  = await we.api.getUsers({'status': 'activated', 'limit': limit, 'offset': offset});
       users = users.concat(loadedUsers.data);
       if(loadedUsers.total < limit + offset){
+        //TODO: filter out users without the celebration date filled in their profiles
         setUsers(users);
       } else {
         await getUsers(limit, limit+offset, users);
@@ -68,7 +69,7 @@ const styles: { [key: string]: React.CSSProperties } = {
     };
 
     getUsers(100,0,[]).catch(console.error);
-
+/*
     const fetchUser = async () => {
       const user = await we.api.getUser("me");
 
@@ -80,21 +81,22 @@ const styles: { [key: string]: React.CSSProperties } = {
 
     }
 
-    fetchUser().catch(console.error);
+    fetchUser().catch(console.error);*/
   }, []);
 
   
-
   /* return (
     <div>
       <a href={we.authMgr.getBranchConfig().whitelabelConfig.frontendURL + "/profile/" + user.id} class="link-internal ally-focus-within" ><img data-type="thumb" data-size="35" aria-hidden="true" data-user-id={user.id} style={styles.container} src={avatarURL} alt="Olivia Mende"></img> {user.firstName} - {user.lastName} - {userDate}</a>
       <div>{userHTML}</div>
     </div>
   ) */
-  return (<div>{
-    usersList.map(
-      theUser => <div>{theUser.id} - {theUser.firstName} - {theUser.lastName}</div>
-    )
-    }</div>);
+  const htmlList = usersList.map(
+    theUser => <div key={theUser.id + 'main'}>
+      <a key={theUser.id + 'a'} href={we.authMgr.getBranchConfig().whitelabelConfig.frontendURL + "/profile/" + theUser.id} className="link-internal ally-focus-within" ><img key={theUser.id + 'img'} data-type="thumb" data-size="35" aria-hidden="true" data-user-id={theUser.id} style={styles.container} src={theUser.avatar?.thumb?.url} alt={theUser.firstName + " " + theUser.lastName}></img> {theUser.firstName} - {theUser.lastName} - {theUser.profile ? theUser.profile['anniversarydate'] : ''}</a>
+    </div>
+  );
+  return (<div key="userList">{htmlList}</div>);
+
     
 };

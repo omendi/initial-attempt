@@ -36,13 +36,16 @@ const widgetAttributes: string[] = [
   'showwholemonthforxdays',
   'showdaysbefore',
   'showdaysafter',
-  'splitbyyear',
   'specialyears',
   'linktochat',
   'limit',
   'headercolor',
   'additionalfieldsdisplayed',
-  'optoutgroupid'
+  'optoutgroupid',
+  'includeyear',
+  'daysbeforetitle',
+  'daysaftertitle',
+  'groupid'
 ];
 
 /**

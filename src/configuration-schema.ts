@@ -37,6 +37,15 @@ export const configurationSchema: JSONSchema7 = {
       enum: ["DD.MM", "MM.DD"],
       title: "Date Format"
     },
+    showdate: {
+      type: "boolean",
+      title: "Show Celebration Date?",
+      default: true
+    },
+    imageurl: {
+      type: "string",
+      title: "Default Profile Picture Image URL"
+    },
     noinstancesmessage: {
       type: "string",
       title: "Message when there are no applicable users",
@@ -55,10 +64,7 @@ export const configurationSchema: JSONSchema7 = {
       type: "boolean",
       title: "Split by Year"
     },
-    showdate: {
-      type: "boolean",
-      title: "Show Celebration Date?"
-    },
+    /*
     todaytitle: {
       type: "string",
       title: "Greeting for Celebrations Today",
@@ -71,14 +77,17 @@ export const configurationSchema: JSONSchema7 = {
       type: "string",
       title: "Days Before Title",
     },
+    */
     showdaysafter: {
       type: "number",
       title: "Number of Days After",
     },
+    /*
     daysaftertitle: {
       type: "string",
       title: "Days After Title",
     },
+    */
     specialyears: {
       type: "string",
       title: "Special Years",
@@ -87,6 +96,7 @@ export const configurationSchema: JSONSchema7 = {
       type: "string",
       title: "Header Color",
     },
+/*
     showwholemonth: {
       type: "boolean",
       title: "Show Celebrations from the Whole Month?",
@@ -96,7 +106,7 @@ export const configurationSchema: JSONSchema7 = {
       type: "number",
       title: "Number of days to show Month of Celebrations",
     },
-       /*
+
     linktochat: {
       type: "boolean",
       title: "Link to Chat?",

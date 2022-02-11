@@ -34,6 +34,7 @@ export interface InitialAttemptProps extends BlockAttributes {
   specialyears: string;
   linktochat: boolean;
   limit: number;
+  imageurl: string;
   headercolor: string;
   additionalfieldsdisplayed: string;
   optoutgroupid: string;
@@ -44,7 +45,7 @@ export interface InitialAttemptProps extends BlockAttributes {
 }
 
 
-export const InitialAttempt = ({ dateformat, anniversaryprofilefieldid, includepending, noinstancesmessage, title, todaytitle, yearword, yearwordplural, showdate, showwholemonth, groupid, showwholemonthforxdays, showdaysbefore, showdaysafter, splitbyyear, specialyears, linktochat, limit, headercolor, additionalfieldsdisplayed, optoutgroupid, includeyear, daysbeforetitle, daysaftertitle }: InitialAttemptProps): ReactElement => {
+export const InitialAttempt = ({ dateformat, anniversaryprofilefieldid, includepending, noinstancesmessage, title, todaytitle, yearword, yearwordplural, showdate, showwholemonth, groupid, showwholemonthforxdays, imageurl, showdaysbefore, showdaysafter, splitbyyear, specialyears, linktochat, limit, headercolor, additionalfieldsdisplayed, optoutgroupid, includeyear, daysbeforetitle, daysaftertitle }: InitialAttemptProps): ReactElement => {
 
   const compareDates = (dateOne: string, dateTwo: string, dateformat = 'DD.MM') => {
 
@@ -123,6 +124,20 @@ export const InitialAttempt = ({ dateformat, anniversaryprofilefieldid, includep
   const hrstyles: { [key: string]: React.CSSProperties } = {
     container: {
       margin: '0'
+    },
+  };
+
+  const contentstyles: { [key: string]: React.CSSProperties } = {
+    container: {
+      height: '400px',
+      overflow: 'auto',
+    },
+  };
+
+  const outerstyles: { [key: string]: React.CSSProperties } = {
+    container: {
+      height: '450px',
+      padding: '3px',
     },
   };
 
@@ -228,11 +243,11 @@ export const InitialAttempt = ({ dateformat, anniversaryprofilefieldid, includep
       }
       htmlList.push(usersGroup.map(
         theUser => {
-          var hasAvatar = typeof(theUser.avatar) !== 'undefined',
+          var hasAvatar = (typeof(theUser.avatar) !== 'undefined' || imageurl !== undefined),
               userLink = we.authMgr.getBranchConfig().whitelabelConfig.frontendURL + "/profile/" + theUser.id;
           return <div key={theUser.id + 'divInner'} id={theUser.id} className="cw-entries" style={divstyles.container}>
                     <a key={theUser.id + 'a'} href={userLink} className="link-internal ally-focus-within">
-                      {hasAvatar ? <img key={theUser.id + 'img'} data-type="thumb" data-size="35" aria-hidden="true" data-user-id={theUser.id} style={imgstyles.container} src={theUser.avatar ? (theUser.avatar.thumb ? theUser.avatar.thumb.url : "") : ""} alt={theUser.firstName + " " + theUser.lastName}></img> :
+                      {hasAvatar ? <img key={theUser.id + 'img'} data-type="thumb" data-size="35" aria-hidden="true" data-user-id={theUser.id} style={imgstyles.container} src={theUser.avatar ? (theUser.avatar.thumb ? theUser.avatar.thumb.url : imageurl) : imageurl} alt={theUser.firstName + " " + theUser.lastName}></img> :
                         <span key={theUser.id + 'span'} data-type="thumb" data-size="35" aria-hidden="true" data-user-id={theUser.id} style={spanstyles.container}>{theUser.firstName.substr(0,1) + theUser.lastName.substr(0,1)}</span>}
                       <p style={pstyles.container}>{theUser.firstName} {theUser.lastName}<hr style={hrstyles.container}></hr>{showdate === 'true' ? (theUser.profile ? convertDate(theUser.profile[anniversaryprofilefieldid]) : '') : ''}</p>
                       </a>
@@ -246,9 +261,9 @@ export const InitialAttempt = ({ dateformat, anniversaryprofilefieldid, includep
   }
 
   return (
-    <div id={"cw-" + anniversaryprofilefieldid}>
-      <h2 id='cw-title' style={h2styles.container}>{title}</h2>
-      <div id='cw-list-container' key="userList">{htmlList}</div>
+    <div id={"cw-" + anniversaryprofilefieldid} style={outerstyles.container}>
+      <h1 id='cw-title' style={h2styles.container}>{title}</h1>
+      <div id='cw-list-container' key="userList" style={contentstyles.container}>{htmlList}</div>
     </div>
   );
 

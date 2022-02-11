@@ -37,6 +37,7 @@ const widgetAttributes: string[] = [
   'showdaysbefore',
   'showdaysafter',
   'specialyears',
+  'imageurl',
   'linktochat',
   'limit',
   'headercolor',

@@ -20,6 +20,14 @@ import { JSONSchema7 } from "json-schema";
  */
 export const configurationSchema: JSONSchema7 = {
   properties: {
+    title: {
+      type: "string",
+      title: "Title",
+    },
+    groupid: {
+      type: "string",
+      title: "Group ID",
+    },
     anniversaryprofilefieldid: {
       type: "string",
       title: "Profile Field ID"
@@ -29,35 +37,55 @@ export const configurationSchema: JSONSchema7 = {
       enum: ["DD.MM", "MM.DD"],
       title: "Date Format"
     },
-    includepending: {
-      type: "boolean",
-      title: "Include Pending Users?",
-      default: false
-    },
     noinstancesmessage: {
       type: "string",
       title: "Message when there are no applicable users",
     },
-    title: {
-      type: "string",
-      title: "Title",
-    },
-    todaytitle: {
-      type: "string",
-      title: "Today's Title",
-    },
     yearword: {
       type: "string",
       title: "Year Word",
+      default: "Year"
     },
     yearwordplural: {
       type: "string",
       title: "Year Word Plural",
+      default: "Years"
+    },
+    includeyear: {
+      type: "boolean",
+      title: "Split by Year"
     },
     showdate: {
       type: "boolean",
-      title: "Show Celebration Date?",
-      default: true
+      title: "Show Celebration Date?"
+    },
+    todaytitle: {
+      type: "string",
+      title: "Greeting for Celebrations Today",
+    },
+    showdaysbefore: {
+      type: "number",
+      title: "Number of Days of Past Celebrations",
+    },
+    daysbeforetitle: {
+      type: "string",
+      title: "Days Before Title",
+    },
+    showdaysafter: {
+      type: "number",
+      title: "Number of Days After",
+    },
+    daysaftertitle: {
+      type: "string",
+      title: "Days After Title",
+    },
+    specialyears: {
+      type: "string",
+      title: "Special Years",
+    },
+    headercolor: {
+      type: "string",
+      title: "Header Color",
     },
     showwholemonth: {
       type: "boolean",
@@ -68,23 +96,7 @@ export const configurationSchema: JSONSchema7 = {
       type: "number",
       title: "Number of days to show Month of Celebrations",
     },
-    showdaysbefore: {
-      type: "number",
-      title: "Number of Days Before",
-    },
-    showdaysafter: {
-      type: "number",
-      title: "Number of Days After",
-    },
-    splitbyyear: {
-      type: "boolean",
-      title: "Split User's by Year?",
-      default: false
-    },
-    specialyears: {
-      type: "string",
-      title: "Special Years",
-    },
+       /*
     linktochat: {
       type: "boolean",
       title: "Link to Chat?",
@@ -94,29 +106,24 @@ export const configurationSchema: JSONSchema7 = {
       type: "number",
       title: "Maximum Users to Show",
     },
-    headercolor: {
-      type: "string",
-      title: "Header Color",
-    },
     additionalfieldsdisplayed: {
       type: "string",
       title: "Additional Profile Fields to Display",
     },
+    */
     optoutgroupid: {
       type: "string",
       title: "Opt Out GroupID",
+    },
+    includepending: {
+      type: "boolean",
+      title: "Include Pending Users?",
+      default: false
     }
   },
   required : ["anniversaryprofilefieldid", "dateformat"],
   dependencies: {
-    includepending: {
-      properties: {
-        networkpluginid: { 
-          type: "string",
-          title: "Network Plugin ID" 
-        },
-      }
-    },
+    /*
     limit: {
       properties: {
         fullpageid: {
@@ -129,22 +136,7 @@ export const configurationSchema: JSONSchema7 = {
         }
       }
     },
-    showdaysbefore: {
-      properties: {
-        daysbeforetitle: {
-          type: "string",
-          title: "Days Before Title",
-        }
-      }
-    },
-    showdaysafter: {
-      properties: {
-        daysaftertitle: {
-          type: "string",
-          title: "Days After Title",
-        }
-      }
-    }
+    */
   }
 };
 
@@ -155,6 +147,9 @@ export const configurationSchema: JSONSchema7 = {
 export const uiSchema: UiSchema = {
   anniversaryprofilefieldid: {
     "ui:help": "Enter the profile field ID of the field that holds the date information",
+  },
+  groupid: {
+    "ui:help": "The group ID for the group of users who should be shown"
   },
   dateformat: {
     "ui:help": "Enter the date format that the date is entered in."
@@ -198,12 +193,10 @@ export const uiSchema: UiSchema = {
   daysaftertitle: {
     "ui:help": "The message that appears at the top of upcoming celebrations section",
   },
-  splitbyyear: {
-    "ui:help": "Select if users should be split by year",
-  },
   specialyears: {
     "ui:help": "If only certain years of celebrations should be shown, enter numbers separated by commas",
   },
+  /*
   linktochat: {
     "ui:help": "Select if the link to a chat message should be shown, default is a link to the user's profile",
   },
@@ -216,6 +209,7 @@ export const uiSchema: UiSchema = {
   fullpagetext: {
     "ui:help": "Link text to link to page with the full list of celebrations",
   },
+  */
   headercolor: {
     "ui:help": "Hexcode color of the Header",
   },
@@ -224,5 +218,8 @@ export const uiSchema: UiSchema = {
   },
   optoutgroupid: {
     "ui:help": "Group ID of opt out group. Users in this group will not be shown in the widget",
+  },
+  includeyear: {
+    "ui:help": "Split by year and show year of celebration",
   }
 };

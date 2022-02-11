@@ -246,7 +246,7 @@ export const InitialAttempt = ({ dateformat, anniversaryprofilefieldid, includep
   }
 
   return (
-    <div id={"cw " + anniversaryprofilefieldid}>
+    <div id={"cw-" + anniversaryprofilefieldid}>
       <h2 id='cw-title' style={h2styles.container}>{title}</h2>
       <div id='cw-list-container' key="userList">{htmlList}</div>
     </div>

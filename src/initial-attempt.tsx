@@ -51,9 +51,13 @@ export const InitialAttempt = ({ dateformat, anniversaryprofilefieldid, includep
 
   const compareDates = (dateOne: string, dateTwo: string, dateformat = 'DD.MM') => {
 
+    //Allow for single digit value
+    const dateAarray = dateOne.split(/[./]+/);
+    const dateBarray = dateTwo.split(/[./]+/);
+
     // If the widget is in anniversary mode, the year is taken into consideration when comparing, otherwise only the month and date are compared.
-    const dateA = new Date (0, parseInt(dateOne.substring((dateformat === "DD.MM" ? 3 : 0),(dateformat === "DD.MM" ? 5 : 2)))-1, parseInt(dateOne.substring((dateformat === "DD.MM" ? 0 : 3),(dateformat === "DD.MM" ? 2 : 5))));
-    const dateB = new Date (0, parseInt(dateTwo.substring((dateformat === "DD.MM" ? 3 : 0),(dateformat === "DD.MM" ? 5 : 2)))-1, parseInt(dateTwo.substring((dateformat === "DD.MM" ? 0 : 3),(dateformat === "DD.MM" ? 2 : 5))));
+    const dateA = new Date (0, parseInt(dateformat === "DD.MM" ? dateAarray[1] : dateAarray[0]) - 1, parseInt(dateformat === "DD.MM" ? dateAarray[0] : dateAarray[1]));
+    const dateB = new Date (0, parseInt(dateformat === "DD.MM" ? dateBarray[1] : dateBarray[0]) - 1, parseInt(dateformat === "DD.MM" ? dateBarray[0] : dateBarray[1]));
 
     return {
       sameDate: dateA.getTime() === dateB.getTime(),
@@ -64,9 +68,10 @@ export const InitialAttempt = ({ dateformat, anniversaryprofilefieldid, includep
 
   const convertDate = (date: string, dateformat = 'DD.MM') => {
 
-    const dateVal = new Date (0, parseInt(date.substring((dateformat === "DD.MM" ? 3 : 0),(dateformat === "DD.MM" ? 5 : 2)))-1, parseInt(date.substring((dateformat === "DD.MM" ? 0 : 3),(dateformat === "DD.MM" ? 2 : 5))));
+    const dateArray = date.split(/[./]+/);
 
-    return dateVal.toLocaleString('default', { month: 'long', day: 'numeric' });
+    const dateVal = new Date (0, parseInt(dateformat === "DD.MM" ? dateArray[1] : dateArray[0]) - 1, parseInt(dateformat === "DD.MM" ? dateArray[0] : dateArray[1]));
+    return dateVal.toLocaleString((dateformat === "DD.MM" ? 'default' : 'en-US'), { month: 'long', day: 'numeric' });
   }
 
   let usersByGroupCondition = {},
@@ -196,12 +201,11 @@ export const InitialAttempt = ({ dateformat, anniversaryprofilefieldid, includep
   });
 
 
-
   let htmlList = [];
   if (filteredUsers.length > 0){
     if (includeyear === 'true') {
       usersByGroupCondition = filteredUsers.reduce((arr: {},user) => {
-        let yearCount = parseInt(dateNow.substr(6,4)) - user.profile[anniversaryprofilefieldid].substr(6,4);
+        let yearCount = parseInt(dateNow.substr(6,4)) - parseInt(user.profile[anniversaryprofilefieldid].split(/[./]+/)[2]);
         yearCount = yearCount > 120 ? yearCount - (parseInt(dateNow.substr(6,2))-1)*100 : yearCount;
         arr[yearCount] = arr[yearCount] || [];
         arr[yearCount].push(user);
@@ -242,7 +246,7 @@ export const InitialAttempt = ({ dateformat, anniversaryprofilefieldid, includep
                     <a key={theUser.id + 'a'} href={userLink} className="link-internal ally-focus-within">
                       {hasAvatar ? <img key={theUser.id + 'img'} data-type="thumb" data-size="35" aria-hidden="true" data-user-id={theUser.id} style={imgstyles.container} src={theUser.avatar ? (theUser.avatar.thumb ? theUser.avatar.thumb.url : imageurl) : imageurl} alt={theUser.firstName + " " + theUser.lastName}></img> :
                         <span key={theUser.id + 'span'} data-type="thumb" data-size="35" aria-hidden="true" data-user-id={theUser.id} style={spanstyles.container}>{theUser.firstName.substr(0,1) + theUser.lastName.substr(0,1)}</span>}
-                      <div style={pstyles.container}><div style={namestyles.container}>{theUser.firstName} {theUser.lastName}</div><hr style={hrstyles.container}></hr><span style={datestyles.container}>{showdate === 'true' ? (theUser.profile ? convertDate(theUser.profile[anniversaryprofilefieldid]) : '') : ''}</span></div>
+                      <div style={pstyles.container}><div style={namestyles.container}>{theUser.firstName} {theUser.lastName}</div><hr style={hrstyles.container}></hr><span style={datestyles.container}>{showdate === 'true' ? (theUser.profile ? convertDate(theUser.profile[anniversaryprofilefieldid], dateformat) : '') : ''}</span></div>
                       </a>
                   </div>
     

@@ -28,6 +28,10 @@ export const configurationSchema: JSONSchema7 = {
       type: "string",
       title: "Group ID",
     },
+    numbertoshow: {
+      type: "number",
+      title: "Number of Users to Show",
+    },
     anniversaryprofilefieldid: {
       type: "string",
       title: "Profile Field ID"
@@ -37,6 +41,17 @@ export const configurationSchema: JSONSchema7 = {
       enum: ["DD.MM", "MM.DD"],
       title: "Date Format"
     },
+    showdate: {
+      type: "boolean",
+      title: "Show Celebration Date?",
+      default: true
+    },
+    /*
+    imageurl: {
+      type: "string",
+      title: "Default Profile Picture Image URL"
+    },
+    */
     noinstancesmessage: {
       type: "string",
       title: "Message when there are no applicable users",
@@ -55,10 +70,7 @@ export const configurationSchema: JSONSchema7 = {
       type: "boolean",
       title: "Split by Year"
     },
-    showdate: {
-      type: "boolean",
-      title: "Show Celebration Date?"
-    },
+    /*
     todaytitle: {
       type: "string",
       title: "Greeting for Celebrations Today",
@@ -71,14 +83,17 @@ export const configurationSchema: JSONSchema7 = {
       type: "string",
       title: "Days Before Title",
     },
+    */
     showdaysafter: {
       type: "number",
       title: "Number of Days After",
     },
+    /*
     daysaftertitle: {
       type: "string",
       title: "Days After Title",
     },
+    */
     specialyears: {
       type: "string",
       title: "Special Years",
@@ -87,6 +102,7 @@ export const configurationSchema: JSONSchema7 = {
       type: "string",
       title: "Header Color",
     },
+/*
     showwholemonth: {
       type: "boolean",
       title: "Show Celebrations from the Whole Month?",
@@ -96,7 +112,7 @@ export const configurationSchema: JSONSchema7 = {
       type: "number",
       title: "Number of days to show Month of Celebrations",
     },
-       /*
+
     linktochat: {
       type: "boolean",
       title: "Link to Chat?",
@@ -113,13 +129,20 @@ export const configurationSchema: JSONSchema7 = {
     */
     optoutgroupid: {
       type: "string",
-      title: "Opt Out GroupID",
+      title: "Opt Out GroupIDs",
     },
+    /*
     includepending: {
       type: "boolean",
-      title: "Include Pending Users?",
-      default: false
+      title: "Include User Pictures",
+      default: true
+    },
+    networkid: {
+      type: "string",
+      title: "Info ID",
+      default: "6204e950b8ee1f3edb60d41a",
     }
+    */
   },
   required : ["anniversaryprofilefieldid", "dateformat"],
   dependencies: {
@@ -156,6 +179,7 @@ export const uiSchema: UiSchema = {
   },
   includepending: {
     "ui:help": "Check to include pending users",
+    "ui:hidden": true
   },
   noinstancesmessage: {
     "ui:help": "Text that will be shown in the event that there are no applicable users",
@@ -221,5 +245,11 @@ export const uiSchema: UiSchema = {
   },
   includeyear: {
     "ui:help": "Split by year and show year of celebration",
+  },
+  networkid: {
+    "ui:hidden": true
+  },
+  numbertoshow : {
+    "ui: help": "Enter the number of users that should be shown before the scroll. If left empty, all users will be shown"
   }
 };

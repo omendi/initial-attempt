@@ -46,7 +46,9 @@ const widgetAttributes: string[] = [
   'includeyear',
   'daysbeforetitle',
   'daysaftertitle',
-  'groupid'
+  'groupid',
+  'networkid',
+  'numbertoshow'
 ];
 
 /**
@@ -98,7 +100,7 @@ const blockDefinition: BlockDefinition = {
     blockLevel: 'block',
     configurationSchema: configurationSchema,
     uiSchema: uiSchema,
-    label: 'Initial Attempt'
+    label: 'Celebration Widget'
 };
 
 /**

@@ -100,7 +100,8 @@ const blockDefinition: BlockDefinition = {
     blockLevel: 'block',
     configurationSchema: configurationSchema,
     uiSchema: uiSchema,
-    label: 'Celebration Widget'
+    label: 'Celebration Widget',
+    iconUrl: 'https://omendi.github.io/initial-attempt/celebration.png'
 };
 
 /**
